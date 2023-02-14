@@ -1,8 +1,30 @@
 const express = require('express')
 
 const responseHandler = require('./utils/handleResponses')
+const db = require('./utils/database')
+const initModels = require('./models/initModel')
 
 const app = express()
+
+app.use(express.json())
+
+db.authenticate()
+    .then(() => {
+        console.log('Connection with DB was stablished successfully with credentials given')
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+db.sync()
+    .then(() => {
+        console.log('DB synced successfully')
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+initModels()
 
 app.get('/', (req, res) => {
     responseHandler.success({
