@@ -1,10 +1,10 @@
 const userServices = require('./users.services')
-const router = require('express').Router()
+const usersRouter = require('express').Router()
 
-router.get('/users', userServices.getAllUsers)
-router.get('./users/:id', userServices.getUserById)
-router.post('/users', userServices.postNewUser)
-router.patch('/users/:id', userServices.patchUser)
-router.delete('/users/:id', userServices.deleteUser)
+usersRouter.get('/users', userServices.getAllUsers)
+usersRouter.get('/users/:id', userServices.getUserById)
+usersRouter.post('/users', userServices.postNewUser)
+usersRouter.patch('/users/:id', userServices.patchUser)
+usersRouter.delete('/users/:id', userServices.deleteUser)
 
-module.exports = router
+module.exports = usersRouter

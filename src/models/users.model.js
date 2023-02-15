@@ -4,14 +4,14 @@ const db = require('../utils/database')
 
 const Users = db.define('users', {
     id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         primaryKey: true,
     },
-    first_name: {
+    firstName: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    last_name: {
+    lastName: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -24,12 +24,11 @@ const Users = db.define('users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    profile_image: {
+    profileImage: {
         type: DataTypes.STRING,
     },
-    is_active: {
+    isActive: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
         default: false
     },
     phone: {

@@ -1,5 +1,8 @@
+const uuid = require('uuid')
+const { hashPassword } = require('../utils/crypto')
+
 const Users = require('../models/users.model')
-const Participants = require('../models/participants.models')
+const Participants = require('../models/participants.model')
 
 const usersController = {
     findAllUsers : async () => {
@@ -23,16 +26,32 @@ const usersController = {
         })
         return data
     },
+
+    findUserByEmail : async (email) => {
+
+        const data = await Users.findOne({
+            where: {
+                email
+            }
+        })
+
+        return data
+    },
     
     createNewUser : async (userObj) => {
     
         const newUser = {
-            first_name: userObj.title,
-            last_name: userObj.price,
-            profile_image : userObj.profile_image
+            id: uuid.v4(),
+            firstName: userObj.firstName,
+            lastName: userObj.lastName,
+            email: userObj.email,
+            password: hashPassword(userObj.password),
+            profileImage : userObj.profileImage,
+            phone: userObj.phone
         }
     
         const data = await Users.create(newUser)
+
         return data
     },
     
