@@ -3,6 +3,7 @@ const express = require('express')
 const responseHandler = require('./utils/handleResponses')
 const db = require('./utils/database')
 const initModels = require('./models/initModel')
+
 const usersRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
 
