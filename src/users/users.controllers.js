@@ -7,7 +7,7 @@ const Participants = require('../models/participants.model')
 const usersController = {
     findAllUsers : async () => {
         const data = await Users.findAll({
-            attributes: ['id', 'first_name', 'last_name', 'profile_image'],
+            attributes: ['id', 'firstName', 'lastName', 'profileImage'],
             
             include: {
                 model: Participants,

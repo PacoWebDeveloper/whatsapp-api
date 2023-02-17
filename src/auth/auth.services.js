@@ -10,6 +10,7 @@ const postLogin = (req, res) => {
             if (data) {
                 const token = jwt.sign({ //aqui podemos mandar la info que queramos
                     id: data.id,
+                    firstName: data.firstName,
                     email: data.email
                 }, 'academlo', {
                     expiresIn: '1d'

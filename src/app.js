@@ -3,6 +3,7 @@ const express = require('express')
 const responseHandler = require('./utils/handleResponses')
 const db = require('./utils/database')
 const initModels = require('./models/initModel')
+const passportJwt = require('./middleware/auth.middleware')
 
 const usersRouter = require('./users/users.router')
 const authRouter = require('./auth/auth.router')
@@ -38,6 +39,13 @@ app.get('/', (req, res) => {
             'users': "http://localhost:7000/api/v1/users",
             'conversations': 'http://localhost:7000/api/v1/conversations'
         }
+    })
+})
+
+app.get('/protected', passportJwt, (req, res) => {
+    res.status(200).json({
+        message: `Hola! ${req.user.firstName}, Este mensaje solo lo puedes ver si tienes session iniciada`,
+        tokenDecoded: req.user
     })
 })
 

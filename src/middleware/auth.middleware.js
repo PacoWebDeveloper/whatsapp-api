@@ -17,8 +17,8 @@ passport.use(new Strategy(passportConfigs, (tokenDecoded, done) => {
                 done(null, false) //user not exists
         })
         .catch(err => {
-            done(err, false) // error on DB
+            done(err, false, {message: 'Error processing token data'}) // error on DB
         })
 }))
 
-module.exports = passport
+module.exports = passport.authenticate('jwt', {session: false})

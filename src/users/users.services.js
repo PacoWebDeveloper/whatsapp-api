@@ -142,6 +142,85 @@ const usersServices = {
                 })
                 })
             })
+    },
+    // Estos servicios son unicamente para acciones sobre mi propio usuario
+    getMyUser : (req, res) => {
+        const id = req.user.id
+        usersController.findUserById(id)
+            .then(data => {
+                Responses.success({
+                    status: 200,
+                    data,
+                    message: 'This is your user',
+                    res
+                })
+            })
+            .catch(err => {
+                Responses.error({
+                    res,
+                    status: 400,
+                    message: 'Something went wrong getting user',
+                    data: err
+                })
+            })
+    },
+    deleteMyUser : (req, res) => {
+        const id = req.user.id
+        usersController.deleteUser(id)
+            .then(data => {
+                if (data)
+                    Responses.success({
+                        status: 200,
+                        data,
+                        message: 'Your user was deleted successfully',
+                        res
+                    })
+                else
+                    Responses.error({
+                        status: 400,
+                        data,
+                        message: `User with id: ${id}, not found`,
+                        res
+                    })
+            })
+            .catch(err => {
+                Responses.error({
+                    res,
+                    status: 400,
+                    message: 'Something went wrong deteling user',
+                    data: err
+                })
+            })
+    },
+    patchMyUser : (req, res) => {
+        const id = req.user.id
+        const userObj = req.user
+
+        usersController.updateUser(id, userObj)
+            .then(data => {
+                if (data)
+                    Responses.success({
+                        res, 
+                        status: 200,
+                        message: 'Your user was updated',
+                        data
+                    })
+                else
+                    Responses.error({
+                        res,
+                        status: 400,
+                        message: `User with id ${id} not found`,
+                        data
+                    })
+            })
+            .catch(err => {
+                Responses.error({
+                    res, 
+                    status: 400,
+                    message: 'Something went wrong updating user',
+                    data: err
+                })
+            })
     }
 }
 
