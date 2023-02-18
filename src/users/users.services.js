@@ -194,7 +194,7 @@ const usersServices = {
     },
     patchMyUser : (req, res) => {
         const id = req.user.id
-        const userObj = req.user
+        const userObj = req.body
 
         usersController.updateUser(id, userObj)
             .then(data => {
