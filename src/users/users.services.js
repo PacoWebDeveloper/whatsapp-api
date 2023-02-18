@@ -1,5 +1,6 @@
 const usersController = require('./users.controllers')
 const Responses = require('../utils/handleResponses')
+const { hashPassword } = require('../utils/crypto')
 
 const usersServices = {
     getAllUsers: (req, res) => {
@@ -194,24 +195,25 @@ const usersServices = {
     },
     patchMyUser : (req, res) => {
         const id = req.user.id
-        const userObj = req.body
+        //Important, alway destructure data to avoid that user changes parameters that we don't want he change
+        const { firstName, lastName, email, password, profileImage, phone} = req. body
+
+        const userObj = {
+            firstName,
+            lastName,
+            email,
+            password: hashPassword(password),
+            profileImage,
+            phone
+        }
 
         usersController.updateUser(id, userObj)
-            .then(data => {
-                if (data)
-                    Responses.success({
-                        res, 
-                        status: 200,
-                        message: 'Your user was updated',
-                        data
-                    })
-                else
-                    Responses.error({
-                        res,
-                        status: 400,
-                        message: `User with id ${id} not found`,
-                        data
-                    })
+            .then(() => {
+                Responses.success({
+                    res, 
+                    status: 200,
+                    message: 'Your user was updated'
+                })
             })
             .catch(err => {
                 Responses.error({
